@@ -14,6 +14,7 @@ sudo apt-get update
 sudo apt-get -y install cuda
 sudo modprobe nvidia
 nvidia-smi
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64 # required by tensorflow
 
 # install Anaconda for current user
 mkdir downloads
@@ -27,10 +28,10 @@ conda install -y bcolz
 conda upgrade -y --all
 
 # install tensorflow
-pip3 install tensorflow-gpu # Python 3.n; GPU support 
+pip install tensorflow-gpu # Python 3.n; GPU support 
 
 # install and configure keras
-pip3 install keras
+pip install keras
 mkdir ~/.keras
 echo '{
     "image_data_format": "channels_last",
