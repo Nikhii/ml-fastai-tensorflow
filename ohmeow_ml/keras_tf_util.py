@@ -1,5 +1,5 @@
 # core imports
-import os, sys, json, bcolz, random as py_random
+import os, sys, math, json, bcolz, random as py_random
 import shutil, zipfile
 from glob import glob
 
@@ -14,8 +14,11 @@ from sklearn.preprocessing import OneHotEncoder
 from keras import backend as K
 from keras.models import Model, Sequential
 from keras.layers.core import Flatten, Dense, Dropout, Lambda
+from keras.layers.convolutional import Conv2D, ZeroPadding2D, MaxPooling2D
+from keras.layers.normalization import BatchNormalization
 from keras.optimizers import SGD, RMSprop, Adam
 from keras.preprocessing import image
+from keras.regularizers import *
 
 from pretrained_models.vgg19 import VGG19
 from pretrained_models.vgg16 import VGG16
@@ -56,7 +59,7 @@ def finetune(model, n_outputs, n_layers_to_remove=1):
     return ft_model
 
 def compile(model, lr=0.001):
-    model.compile(optimizer=RMSprop(lr=lr), loss='categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer=Adam(lr=lr), loss='categorical_crossentropy', metrics=['accuracy'])
 
 
 # reshapes an 1D array of classes to a one-hot encoded array
